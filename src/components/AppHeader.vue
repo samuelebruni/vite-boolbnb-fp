@@ -8,9 +8,9 @@ export default {
 <template>
     <nav class="site_nav">
 
-        <div class="row h-100  align-items-center">
+        <div class="row  align-items-center">
 
-            <div class="col ">
+            <div class="col">
                 <a class="logo" href="">
                     <img class="img-fluid" src="../assets/image/boolbnb (4).png" alt="">
                 </a>

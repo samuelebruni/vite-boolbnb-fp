@@ -1,1 +1,25 @@
 @use '../node_modules/bootstrap/scss/bootstrap.scss';
+
+.block_footer {
+    background-color: #f7f7f7;
+}
+
+a {
+    color: rgb(79, 77, 77);
+    text-decoration: none;
+}
+
+.titol_list_footer {
+    cursor: pointer;
+    color: rgb(100, 99, 99);
+}
+
+.titol_list_footer:hover {
+    color: black;
+}
+
+.list_footer {
+    list-style: none;
+    margin-left: -31px;
+    margin-bottom: 8px;
+}
