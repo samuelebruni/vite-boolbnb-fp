@@ -16,6 +16,7 @@ export default {
     data() {
         return {
             apartments: [],
+            baseUrl: 'http://127.0.0.1:8000/'
         }
     },
     methods: {
@@ -54,7 +55,7 @@ export default {
                         <div class="row">
                             <div class="col-3" v-for="apartment in apartments">
                                 <div class="card mb-5" style="width: 18rem; border: none;">
-                                    <img :src="apartment.cover_image" class="card-img-top" alt="..."
+                                    <img :src="baseUrl + 'storage/' + apartment.cover_image" class="card-img-top" alt="..."
                                         style="border-radius: 13px;">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ apartment.name }}</h5>
