@@ -52,8 +52,8 @@ export default {
                 <div class="px-5 py-4">
                     <div class="container">
                         <div class="row">
-                            <div class="col-3" v-for="apartment in apartments">
-                                <div class="card mb-5" style="width: 18rem; border: none;">
+                            <div class="col-12 col-md-4 col-sm-6 col-lg-3" v-for="apartment in apartments">
+                                <div class="card mb-5" style="border: none;">
                                     <img :src="apartment.cover_image" class="card-img-top" alt="..."
                                         style="border-radius: 13px;">
                                     <div class="card-body">
