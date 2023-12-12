@@ -14,7 +14,7 @@ export default {
     methods: {
         async getApartment() {
             const id = this.$route.params.id
-            const data = await axios.get('http://127.0.0.1:8001/api/apartment/' + id)
+            const data = await axios.get('http://127.0.0.1:8000/api/apartment/' + id)
             console.log(data);
             this.apartment = data.data.result;
         }
