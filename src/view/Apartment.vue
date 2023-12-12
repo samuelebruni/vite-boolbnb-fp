@@ -85,41 +85,24 @@ export default {
 
 <template>
     <div v-if="apartment">
-        <div class="container py-4">
+        <div class="container px-0 py-4">
             <h2 class="text-center mt-3" style="margin-bottom: 45px;">{{ apartment.name }}</h2>
-            <div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 col-lg-6 mb-sm-3">
-                        <div
-                            style="border-radius: 20px 0px 0px 20px; background-image: url(https://a0.muscache.com/im/pictures/c89164d3-b5a3-46d5-b355-62238c241170.jpg?im_w=1200);height: 400px;background-size: cover; background-position: 50%;">
-                        </div>
+            <div class="mb-5">
+                <div class="d-flex">
+                    <div>
+                        <img class="rounded-top img-fluid" :src="this.baseUrl + 'storage/' + apartment.cover_image" alt="">
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6" style="height: 400px;">
-                        <div class="row" style="height: 100%">
-                            <div class="col-6 mb-3">
-                                <div
-                                    style="background-image: url(https://a0.muscache.com/im/pictures/c89164d3-b5a3-46d5-b355-62238c241170.jpg?im_w=1200);height: 100%;background-size: cover; background-position: 50%;">
-                                </div>
-                            </div>
-                            <div class="col-6 mb-3">
-                                <div
-                                    style="border-radius: 0px 20px 0px 0px; background-image: url(https://a0.muscache.com/im/pictures/05368ed7-e85d-4205-a52e-999c9d361690.jpg?im_w=720);height: 100%;background-size: cover; background-position: 50%;">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div
-                                    style="background-image: url(https://a0.muscache.com/im/pictures/c89164d3-b5a3-46d5-b355-62238c241170.jpg?im_w=1200);height: 100%;background-size: cover; background-position: 50%;">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div
-                                    style="border-radius: 0px 0px 20px 0px; background-image: url(https://a0.muscache.com/im/pictures/c89164d3-b5a3-46d5-b355-62238c241170.jpg?im_w=1200);height: 100%;background-size: cover; background-position: 50%;">
-                                </div>
-                            </div>
+
+                    <div class="d-flex flex-column">
+                        <div class="col-3" v-for="image in apartment.images">
+
+                            <img :src="this.baseUrl + 'storage/' + image.path" style="height: 223px; width: 320px">
+
                         </div>
                     </div>
                 </div>
             </div>
+
             <h4 class="">{{ apartment.address }}</h4>
 
 
@@ -143,7 +126,7 @@ export default {
                         <p><strong>Mq: </strong>{{ apartment.mq }}</p>
                         <div>
                             <ul>
-                                <li v-for="service in apartment.services">{{ service.name }}</li>
+                                <li v-for=" service  in  apartment.services ">{{ service.name }}</li>
                             </ul>
                         </div>
                     </div>
@@ -166,7 +149,7 @@ export default {
                                         <div class="alert alert-danger" role="alert" v-if="errors.name">
                                             <strong>Erorrs!</strong>
                                             <ul>
-                                                <li v-for="message in errors.name">{{ message }}</li>
+                                                <li v-for=" message  in  errors.name ">{{ message }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -178,7 +161,7 @@ export default {
                                         <div class="alert alert-danger" role="alert" v-if="errors.email">
                                             <strong>Erorrs!</strong>
                                             <ul>
-                                                <li v-for="message in errors.email">{{ message }}</li>
+                                                <li v-for=" message  in  errors.email ">{{ message }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -190,7 +173,7 @@ export default {
                                         <div class="alert alert-danger" role="alert" v-if="errors.phone">
                                             <strong>Erorrs!</strong>
                                             <ul>
-                                                <li v-for="message in errors.phone">{{ message }}</li>
+                                                <li v-for=" message  in  errors.phone ">{{ message }}</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -202,7 +185,7 @@ export default {
                                         <div class="alert alert-danger" role="alert" v-if="errors.message">
                                             <strong>Erorrs!</strong>
                                             <ul>
-                                                <li v-for="message in errors.message">{{ message }}</li>
+                                                <li v-for=" message  in  errors.message ">{{ message }}</li>
                                             </ul>
                                         </div>
                                     </div>
