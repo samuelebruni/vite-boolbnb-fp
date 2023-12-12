@@ -8,15 +8,28 @@ export default {
             apartment: null
         }
     },
-    components: {
-
-    },
     methods: {
         async getApartment() {
             const id = this.$route.params.id
             const data = await axios.get('http://127.0.0.1:8000/api/apartment/' + id)
             console.log(data);
             this.apartment = data.data.result;
+            this.$nextTick(() => {
+                this.initializeMap();
+            });
+        },
+        initializeMap() {
+            const apartment = this.apartment;
+            tt.setProductInfo("map", "1.0.0");
+            const map = tt.map({
+                key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX",
+                container: "map-" + apartment.id,
+                center: [apartment.longitude, apartment.latitude],
+                zoom: 16,
+            });
+            const marker = new tt.Marker({
+                color: '#ff385c',
+            }).setLngLat([apartment.longitude, apartment.latitude]).addTo(map);
         }
     },
     mounted() {
@@ -24,6 +37,7 @@ export default {
     }
 }
 </script>
+
 
 <template>
     <div v-if="apartment">
@@ -62,7 +76,10 @@ export default {
                     </div>
                 </div>
             </div>
-            <h3 class="">Where:</h3>
+            <h4 class="">{{ apartment.address }}</h4>
+
+
+            <div :id="'map-' + apartment.id" style="width: 100%; height: 400px;border-radius: 15px;"></div>
             <div class="border-bottom py-3">
                 <span>{{ apartment.max_guests }} Ospiti <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                         fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
@@ -86,6 +103,10 @@ export default {
                             </ul>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-sm-12 col-md-6 col-lg-6 py-3">
                         <div class="card py-3 px-5" style="border-radius: 15px;">
                             <h3 class="text-center">You're interested?</h3>
