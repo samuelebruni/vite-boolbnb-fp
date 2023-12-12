@@ -5,91 +5,72 @@ export default {
   name: 'AppFilter',
   data() {
     return {
-      filters: {
-        bathrooms: null,
-        rooms: null,
-        guests: null,
-        squareMeters: null,
-        beds: null,
-      },
+      selectedServices: [], // Array to store selected services
+      services: [], // Array to store available services
     };
   },
   methods: {
-    async applyFilters() {
-      // Costruisci l'URL dell'API con i parametri di filtro
-      const apiUrl = 'http://127.0.0.1:8000/api/apartment';
-      const params = {
-        bathrooms: this.filters.bathrooms,
-        rooms: this.filters.rooms,
-        guests: this.filters.guests,
-        squareMeters: this.filters.squareMeters,
-        beds: this.filters.beds,
-      };
-
+    async fetchServices() {
       try {
-        // Effettua la richiesta all'API con i parametri di filtro
-        const response = await axios.get(apiUrl, { params });
-
-        // Aggiorna la lista degli appartamenti con i risultati filtrati
-        this.$emit('updateApartments', response.data.result);
+        const response = await axios.get('http://127.0.0.1:8000/api/service');
+        this.services = response.data.result;
       } catch (error) {
-        console.error('Errore nella richiesta API:', error);
+        console.error('Error fetching services:', error);
       }
+    },
+    applyFilters() {
+      // Log information for debugging
+      console.log('All Apartments:', this.$parent.apartments);
+      console.log('Selected Services:', this.selectedServices);
 
-      // Chiudi la modale dopo l'applicazione dei filtri
-      $('#filter').modal('hide');
+      // Use the applyFilters function to filter apartments
+      const filteredApartments = this.applyFiltersFunction(
+        this.$parent.apartments,
+        this.selectedServices
+      );
+
+      // Log the filtered apartments for debugging
+      console.log('Filtered Apartments:', filteredApartments);
+
+      // You can update the parent component's state with the filtered data if needed
+      this.$parent.filteredApartments = filteredApartments;
+    },
+
+    applyFiltersFunction(allApartments, selectedServices) {
+      // Use the provided applyFilters function to filter apartments based on selected services
+      return allApartments.filter((apartment) => {
+        return selectedServices.every((selectedServiceId) => {
+          return apartment.services.some((apartmentService) => {
+            return apartmentService.id === selectedServiceId;
+          });
+        });
+      });
     },
   },
+  mounted() {
+    // Fetch available services when the component is mounted
+    this.fetchServices();
+  },
 };
-
 </script>
-  
+
+
 <template>
-    <!-- Modal -->
-    <div class="modal fade" id="filter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filtri</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Campi del filtro -->
-                    <div class="mb-3">
-                        <label for="bathrooms" class="form-label">Bagni</label>
-                        <input type="number" class="form-control" id="bathrooms" v-model="filters.bathrooms">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="rooms" class="form-label">Stanze</label>
-                        <input type="number" class="form-control" id="rooms" v-model="filters.rooms">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="guests" class="form-label">Ospiti</label>
-                        <input type="number" class="form-control" id="guests" v-model="filters.guests">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="squareMeters" class="form-label">Metri Quadrati</label>
-                        <input type="number" class="form-control" id="squareMeters" v-model="filters.squareMeters">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="beds" class="form-label">Letti</label>
-                        <input type="number" class="form-control" id="beds" v-model="filters.beds">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                    <button type="button" class="btn btn-primary" @click="applyFilters">Applica filtri</button>
-                </div>
-            </div>
-        </div>
+  <!-- Dropdown menu for selecting services -->
+  <div class="dropdown m-5 ">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="servicesDropdown" data-bs-toggle="dropdown"
+      aria-haspopup="true" aria-expanded="false">
+      Select Services
+    </button>
+    <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+      <div v-for="service in services" :key="service.id" class="form-check">
+        <input class="form-check-input" type="checkbox" :id="'serviceCheckbox_' + service.id" v-model="selectedServices"
+          :value="service.id" />
+        <label class="form-check-label" :for="'serviceCheckbox_' + service.id">
+          {{ service.name }}
+        </label>
+      </div>
+      <button class="btn btn-primary" @click="applyFilters">Apply Filters</button>
     </div>
+  </div>
 </template>
-  
-  
-<style scoped>
-/* Aggiungi stili specifici al tuo componente se necessario */
-</style>
