@@ -34,6 +34,10 @@ export default {
 
       // You can update the parent component's state with the filtered data if needed
       this.$parent.filteredApartments = filteredApartments;
+      if (filteredApartments.length === 0) {
+        alert('No matching apartments found!');
+        this.selectedServices = [];
+      }
     },
 
     applyFiltersFunction(allApartments, selectedServices) {
