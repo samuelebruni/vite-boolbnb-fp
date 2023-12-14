@@ -73,6 +73,8 @@ export default {
                 })
                 .catch(error => {
                     console.error(error.message);
+                    console.log(error.response); // Mostra la risposta completa
+                    this.loading = false;
                 })
         }
     },
@@ -142,51 +144,70 @@ export default {
 
                             <form action="" v-on:submit.prevent="sendForm()">
                                 <div v-if="!loading">
-                                    <div class="mb-2 mt-4">
-                                        <label for="exampleName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" name="name" id="name" v-model="name"
-                                            placeholder="Name" :class="{ 'is-invalid': errors.name }">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label text-uppercase">Name</label>
+                                        <input type="text" name="name" id="name" class="form-control"
+                                            placeholder="Elon Musk" aria-describedby="nameHelper" v-model="name"
+                                            :class="{ 'is-invalid': errors.name }">
+                                        <small id="nameHelper" class="text-muted">Type your name</small>
+
                                         <div class="alert alert-danger" role="alert" v-if="errors.name">
                                             <strong>Erorrs!</strong>
+
                                             <ul>
-                                                <li v-for=" message  in  errors.name ">{{ message }}</li>
+                                                <li v-for="message in errors.name">{{ message }}</li>
                                             </ul>
+
                                         </div>
+
                                     </div>
 
-                                    <div class="mb-2">
-                                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                        <input type="email" class="form-control" placeholder="name.surname@example.com"
-                                            name="email" id="email" v-model="email" :class="{ 'is-invalid': errors.email }">
-                                        <div class="alert alert-danger" role="alert" v-if="errors.email">
-                                            <strong>Erorrs!</strong>
-                                            <ul>
-                                                <li v-for=" message  in  errors.email ">{{ message }}</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label  text-uppercase">phone</label>
+                                        <input type="tel" name="phone" id="phone" class="form-control" placeholder="123456"
+                                            aria-describedby="phoneHelper" v-model="phone"
+                                            :class="{ 'is-invalid': errors.phone }">
+                                        <small id="phoneHelper" class="text-muted">Type your phone</small>
 
-                                    <div class="mb-2">
-                                        <label for="exampleFormControlInput1" class="form-label">Phone</label>
-                                        <input type="text" class="form-control" placeholder="Your number phone" name="phone"
-                                            id="phone" v-model="phone" :class="{ 'is-invalid': errors.phone }">
                                         <div class="alert alert-danger" role="alert" v-if="errors.phone">
                                             <strong>Erorrs!</strong>
+
                                             <ul>
-                                                <li v-for=" message  in  errors.phone ">{{ message }}</li>
+                                                <li v-for="message in errors.phone">{{ message }}</li>
                                             </ul>
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label text-uppercase">email</label>
+                                        <input type="text" name="email" id="email" class="form-control"
+                                            placeholder="elon@musk.com" aria-describedby="emailHelper" v-model="email"
+                                            :class="{ 'is-invalid': errors.email }">
+                                        <small id="emailHelper" class="text-muted">Type your email</small>
+
+                                        <div class="alert alert-danger" role="alert" v-if="errors.email">
+                                            <strong>Erorrs!</strong>
+
+                                            <ul>
+                                                <li v-for="message in errors.email">{{ message }}</li>
+                                            </ul>
+
                                         </div>
                                     </div>
 
-                                    <div class="mb-2">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Leave a message</label>
-                                        <textarea class="form-control" rows="3" name="message" id="message"
-                                            v-model="message" :class="{ 'is-invalid': errors.message }"></textarea>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Message</label>
+                                        <textarea class="form-control" name="message" id="message" rows="3"
+                                            placeholder="Your message here..." v-model="message"
+                                            :class="{ 'is-invalid': errors.message }"></textarea>
+
                                         <div class="alert alert-danger" role="alert" v-if="errors.message">
-                                            <strong>Erorrs!</strong>
+                                            <strong>Erors!</strong>
+
                                             <ul>
-                                                <li v-for=" message  in  errors.message ">{{ message }}</li>
+                                                <li v-for="message in errors.message">{{ message }}</li>
                                             </ul>
+
                                         </div>
                                     </div>
 
@@ -205,20 +226,25 @@ export default {
 
                                     </button>
                                 </div>
-                                <div v-else class="loader text-center py-5">
+                                <div class="loader text-center py-5" v-else>
 
                                     <i class="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
                                     <div class="mt-3">
                                         Loading...
                                     </div>
 
+
                                 </div>
+
+
+
 
                                 <div class="alert alert-success" role="alert" v-if="success">
                                     <strong>
                                         {{ success }}
                                     </strong>
                                 </div>
+
 
                             </form>
                         </div>
