@@ -14,12 +14,12 @@ export default {
         return {
             apartments: [],
             filteredApartments: [], // New data property to store filtered apartments
-            baseUrl: 'http://127.0.0.1:8000/',
+            baseUrl: 'http://127.0.0.1:8001/',
         };
     },
     methods: {
-        async getApartments() {
-            const data = await axios.get(`${this.baseUrl}api/apartment`);
+        async getApartments(filters = null) {
+            const data = await axios.post(`${this.baseUrl}api/apartments`, filters);
             this.apartments = data.data.result;
             // Initialize filteredApartments with all apartments
             this.filteredApartments = this.apartments;
@@ -37,12 +37,17 @@ export default {
                 );
             });
         },
+        filterSearch(filters) {
+            //Remake getApartments with filters
+            this.getApartments(filters)
+        }
     },
     watch: {
         // Watch for changes to the search term and trigger the filtering
         'AppHeader.searchTerm': function (newSearchTerm) {
             this.updateFilteredApartmentsBySearch(newSearchTerm);
         },
+        //Setup filter for search
     },
     mounted() {
         console.log('Homepage mounted');
@@ -62,7 +67,7 @@ export default {
 <template>
     <div>
         <!-- Pass the apartments and updateFilteredApartments method to AppFilter -->
-        <AppFilter :apartments="apartments" @updateFilteredApartments="updateFilteredApartments" />
+        <AppFilter @filterSearch='filterSearch' :apartments="apartments" />
 
         <div class="px-5 py-4">
             <div class="container">

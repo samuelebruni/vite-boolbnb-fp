@@ -24,6 +24,11 @@ a {
     margin-bottom: 8px;
 }
 
+.list_filters {
+    list-style: none;
+    margin-left: -31px;
+}
+
 @media screen and (min-width:584px) {
     .justify-content-end-lg {
         justify-content: end;
