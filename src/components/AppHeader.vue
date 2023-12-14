@@ -1,7 +1,23 @@
 <script>
+import { emitter } from '../eventBus';
+
 export default {
-    name: 'AppHeader'
-}
+    name: 'AppHeader',
+    data() {
+        return {
+            searchTerm: '', // Add a variable to store the search term
+        };
+    },
+    methods: {
+        handleSearch() {
+            console.log('Search button clicked');
+            console.log('Search term:', this.searchTerm);
+
+            emitter.emit('searchTermChanged', this.searchTerm)
+        },
+    },
+
+};
 </script>
 
 
@@ -12,10 +28,12 @@ export default {
 
         <div class="col nomobile pt-3">
             <div class="input-group mb-3 rounded-pill border border-danger">
-                <input type="text" class="form-control rounded-pill border border-0"
-                    placeholder="Type the rue or the appartament name" aria-label="Recipient's username"
-                    aria-describedby="button-addon2">
-                <button class="btn btn-danger rounded-pill d-flex align-items-center" type="button" id="button-addon2">
+                <!-- Use v-model for two-way binding -->
+                <input v-model="searchTerm" @keyup.enter="handleSearch" type="text" class="form-control rounded-pill border border-0"
+                    placeholder="Type the city or the apartment name" aria-label="Recipient's username"
+                    aria-describedby="button-addon2" />
+                <button @click="handleSearch" class="btn btn-danger rounded-pill d-flex align-items-center" type="button"
+                    id="button-addon2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                         viewBox="0 0 16 16">
                         <path
@@ -24,7 +42,6 @@ export default {
                 </button>
             </div>
         </div>
-
         <div class="col-md-3 col-lg-2 d-flex justify-content-end pe-5 ">
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                 aria-controls="offcanvasNavbar">
@@ -56,14 +73,14 @@ export default {
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active text-dark" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
+                        <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">Login/Register</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item" href="#">Login</a>
-                            <a class="dropdown-item" href="#">Register</a>
+                            <a class="dropdown-item text-dark" href="http://127.0.0.1:8000/login">Login</a>
+                            <a class="dropdown-item" href="http://127.0.0.1:8000/register">Register</a>
                         </div>
                     </li>
                 </ul>
