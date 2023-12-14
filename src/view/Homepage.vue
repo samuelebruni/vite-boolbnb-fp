@@ -2,6 +2,7 @@
 import axios from 'axios';
 import AppCard from '../components/AppCard.vue';
 import AppFilter from '../components/AppFilter.vue';
+import { emitter } from '../eventBus';
 
 export default {
     name: 'Homepage',
@@ -18,16 +19,42 @@ export default {
     },
     methods: {
         async getApartments() {
-            const data = await axios.get('http://127.0.0.1:8000/api/apartment');
+            const data = await axios.get(`${this.baseUrl}api/apartment`);
             this.apartments = data.data.result;
+            // Initialize filteredApartments with all apartments
+            this.filteredApartments = this.apartments;
         },
         // Add a method to update the filtered apartments
         updateFilteredApartments(filteredApartments) {
             this.filteredApartments = filteredApartments;
         },
+        // Add a method to update the filtered apartments based on the search term
+        updateFilteredApartmentsBySearch(searchTerm) {
+            this.filteredApartments = this.apartments.filter((apartment) => {
+                return (
+                    (apartment.municipality && apartment.municipality.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                    (apartment.name && apartment.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                );
+            });
+        },
+    },
+    watch: {
+        // Watch for changes to the search term and trigger the filtering
+        'AppHeader.searchTerm': function (newSearchTerm) {
+            this.updateFilteredApartmentsBySearch(newSearchTerm);
+        },
     },
     mounted() {
+        console.log('Homepage mounted');
+
+        // Listen for the searchTermChanged event
+        emitter.on('searchTermChanged', (newSearchTerm) => {
+            this.updateFilteredApartmentsBySearch(newSearchTerm);
+        });
         this.getApartments();
+    },
+    updated() {
+        console.log('Homepage updated');
     },
 };
 </script>
