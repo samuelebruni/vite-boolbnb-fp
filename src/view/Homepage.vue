@@ -22,6 +22,7 @@ export default {
             const data = await axios.post(`${this.baseUrl}api/apartments`, filters);
             this.apartments = data.data.result;
             // Initialize filteredApartments with all apartments
+            console.log(this.apartments);
             this.filteredApartments = this.apartments;
         },
         // Add a method to update the filtered apartments
@@ -39,6 +40,7 @@ export default {
         },
         filterSearch(filters) {
             //Remake getApartments with filters
+            console.log(filters, 'ciao');
             this.getApartments(filters)
         }
     },
@@ -67,7 +69,7 @@ export default {
 <template>
     <div>
         <!-- Pass the apartments and updateFilteredApartments method to AppFilter -->
-        <AppFilter @filterSearch='filterSearch' :apartments="apartments" />
+        <AppFilter @filter-search='filterSearch' :apartments="apartments" />
 
         <div class="px-5 py-4">
             <div class="container">

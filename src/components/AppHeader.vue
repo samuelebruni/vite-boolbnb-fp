@@ -29,9 +29,9 @@ export default {
         <div class="col nomobile pt-3">
             <div class="input-group mb-3 rounded-pill border border-danger">
                 <!-- Use v-model for two-way binding -->
-                <input v-model="searchTerm" @keyup.enter="handleSearch" type="text" class="form-control rounded-pill border border-0"
-                    placeholder="Type the city or the apartment name" aria-label="Recipient's username"
-                    aria-describedby="button-addon2" />
+                <input v-model="searchTerm" @keyup.enter="handleSearch" type="text"
+                    class="form-control rounded-pill border border-0" placeholder="Type the city or the apartment name"
+                    aria-label="Recipient's username" aria-describedby="button-addon2" />
                 <button @click="handleSearch" class="btn btn-danger rounded-pill d-flex align-items-center" type="button"
                     id="button-addon2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"

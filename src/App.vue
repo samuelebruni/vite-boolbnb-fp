@@ -18,7 +18,7 @@ export default {
     },
     methods: {
         async getApartments() {
-            const data = await axios.get(`${this.baseUrl}api/apartment`);
+            const data = await axios.post(`${this.baseUrl}api/apartments`, null);
             this.apartments = data.data.result;
         },
         updateFilteredApartmentsBySearch(searchTerm) {
