@@ -15,18 +15,9 @@ export default {
     data() {
         return {
             apartments: [],
-            baseUrl: 'http://127.0.0.1:8000/'
+            baseUrl: 'http://127.0.0.1:8001/'
         }
     },
-    methods: {
-        async getApartments() {
-            const data = await axios.get('http://127.0.0.1:8000/api/apartment')
-            this.apartments = data.data.result;
-        }
-    },
-    mounted() {
-        this.getApartments();
-    }
 }
 
 
@@ -34,7 +25,7 @@ export default {
 
 <template>
     <AppHeader></AppHeader>
- 
+
     <main>
         <router-view></router-view>
 
