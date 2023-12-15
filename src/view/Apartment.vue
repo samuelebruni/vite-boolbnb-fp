@@ -14,6 +14,7 @@ export default {
             email: '',
             phone: '',
             message: '',
+            apartment_id: '',
             errors: [],
             success: null
         }
@@ -46,6 +47,7 @@ export default {
             this.errors = [];
             this.success = null
             const payload = {
+                apartment_id: this.apartment_id,
                 name: this.name,
                 email: this.email,
                 phone: this.phone,
@@ -80,6 +82,7 @@ export default {
     },
     mounted() {
         this.getApartment();
+        this.apartment_id = this.$route.params.id;
     }
 }
 </script>
