@@ -1,22 +1,4 @@
 
-<template>
-    <div>
-        <AppFilter @filter-search="filterSearch" :apartments="apartments" />
-
-        <div class="px-5 py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-md-4 col-sm-6 col-lg-3"
-                        v-for="apartment in filteredApartments.length > 0 ? filteredApartments : apartments"
-                        :key="apartment.id">
-                        <AppCard :apartment="apartment" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
 <script>
 import axios from 'axios';
 import AppCard from '../components/AppCard.vue';
