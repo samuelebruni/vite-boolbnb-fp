@@ -14,6 +14,10 @@ export default {
         selected_bathrooms: [] // Array to store selected bathrooms
       },
       services: [], // Array to store available services
+      latitude: null,
+      longitude: null,
+      radius: null,
+      radiusSlider: 10,
     };
   },
   methods: {
@@ -26,8 +30,18 @@ export default {
       }
     },
     applyFilters() {
-      console.log(this.selected_filters);
-      this.$emit('filterSearch', this.selected_filters)
+      console.log({
+        ...this.selected_filters,
+        latitude: this.latitude,
+        longitude: this.longitude,
+        radius: this.radiusSlider,
+      });
+      this.$emit('filterSearch', {
+        ...this.selected_filters,
+        latitude: this.latitude,
+        longitude: this.longitude,
+        radius: this.radiusSlider,
+      });
     },
   },
   mounted() {
@@ -41,6 +55,29 @@ export default {
 <template>
   <!-- Dropdown menu for selecting services -->
   <div class="dropdown m-5 d-flex justify-content-center">
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="geoFiltersDropdown"
+        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Geographical Filters
+      </button>
+      <div class="dropdown-menu px-2" aria-labelledby="geoFiltersDropdown">
+        <div class="form-group">
+          <label for="latitudeInput">Latitude:</label>
+          <input type="number" class="form-control" id="latitudeInput" v-model="latitude" placeholder="Enter latitude">
+        </div>
+        <div class="form-group">
+          <label for="longitudeInput">Longitude:</label>
+          <input type="number" class="form-control" id="longitudeInput" v-model="longitude" placeholder="Enter longitude">
+        </div>
+        <div class="form-group">
+          <div class="form-group">
+            <label for="radiusSlider">Radius:</label>
+            <input type="range" class="form-range" id="radiusSlider" v-model="radiusSlider" min="1" max="20">
+            <span>{{ radiusSlider }} km</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Services
