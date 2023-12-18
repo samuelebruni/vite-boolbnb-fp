@@ -11,9 +11,12 @@ export default {
         selected_bedrooms: [],
         selected_beds: [],
         selected_max_guests: [],
-        selected_bathrooms: []
+        selected_bathrooms: [],
       },
       services: [],
+      selectedLatitude: '',
+      selectedLongitude: '',
+      selectedRadius: 10,
     };
   },
   methods: {
@@ -27,20 +30,63 @@ export default {
     },
     applyFilters() {
       console.log(this.selected_filters);
-      this.$emit('filterSearch', this.selected_filters);
+
+      // Pass latitude, longitude, and filters to the parent component
+      this.$emit('filterSearch', {
+        latitude: this.selectedLatitude,
+        longitude: this.selectedLongitude,
+        radius: this.selectedRadius,
+        filters: this.selected_filters,
+      });
     },
     selectedFiltersCount(filterType) {
-      // Implement the logic to count selected filters based on filterType
       return this.selected_filters[filterType].length;
     },
   },
   mounted() {
     this.fetchServices();
+
+    // TomTom SearchBox implementation
+    var options = {
+      searchOptions: {
+        key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX",
+        language: "en-GB",
+        limit: 5,
+      },
+      autocompleteOptions: {
+        key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX",
+        language: "en-GB",
+      },
+    };
+
+    var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+
+    // Add an event listener for the onObjectSelection event
+    ttSearchBox.on("tomtom.searchbox.resultselected", (event) => {
+      // Log the entire result object to the console for inspection
+      console.log("Result Object:", event.data.result);
+
+      // Check if the selected object has coordinates
+      if (event.data && event.data.result && event.data.result.position) {
+        var position = event.data.result.position;
+
+        // Update the selected latitude and longitude
+        this.selectedLatitude = position.lat;
+        this.selectedLongitude = position.lng;
+
+        // Log the latitude and longitude to the console
+        console.log("Latitude:", this.selectedLatitude);
+        console.log("Longitude:", this.selectedLongitude);
+      }
+    });
+
+    var searchBoxContainer = document.getElementById("tomtom-searchbox-container");
+    searchBoxContainer.appendChild(ttSearchBox.getSearchBoxHTML());
   },
 };
+
+
 </script>
-
-
 
 <template>
   <!-- Dropdown menu for selecting services -->
@@ -50,8 +96,17 @@ export default {
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         City
       </button>
-      <div style="width: 400px;" class="dropdown-menu px-2" aria-labelledby="roomsDropdown">
+      <div class="dropdown-menu px-2" aria-labelledby="roomsDropdown">
+        <!-- Add these input fields to your template -->
         <div id="tomtom-searchbox-container"></div>
+
+        <input type="text" v-model="selectedLatitude" placeholder="Enter Latitude">
+        <input type="text" v-model="selectedLongitude" placeholder="Enter Longitude">
+        <div class="ms-3">
+          <label for="radiusSlider" class="form-label">Radius: {{ selectedRadius }} km</label>
+          <input id="radiusSlider" type="range" min="1" max="20" v-model="selectedRadius" class="form-range"
+            @input="updateRadius" />
+        </div>
       </div>
     </div>
     <div>
