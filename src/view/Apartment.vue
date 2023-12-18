@@ -21,8 +21,8 @@ export default {
     },
     methods: {
         async getApartment() {
-            const id = this.$route.params.id
-            const data = await axios.get('http://127.0.0.1:8000/api/apartment/' + id)
+            const id = this.$route.params.id;
+            const data = await axios.get('http://127.0.0.1:8000/api/apartment/' + id);
             console.log(data);
             this.apartment = data.data.result;
             this.$nextTick(() => {
@@ -31,16 +31,22 @@ export default {
         },
         initializeMap() {
             const apartment = this.apartment;
-            tt.setProductInfo("map", "1.0.0");
-            const map = tt.map({
-                key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX",
-                container: "map-" + apartment.id,
-                center: [apartment.longitude, apartment.latitude],
-                zoom: 16,
-            });
-            const marker = new tt.Marker({
-                color: '#ff385c',
-            }).setLngLat([apartment.longitude, apartment.latitude]).addTo(map);
+
+            // Ensure that TomTom Maps API is loaded before using it
+            if (typeof tt !== 'undefined' && typeof tt.map === 'function') {
+                tt.setProductInfo("map", "1.0.0");
+                const map = tt.map({
+                    key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX", // Replace with your actual API key
+                    container: "map-" + apartment.id,
+                    center: [apartment.longitude, apartment.latitude],
+                    zoom: 16,
+                });
+                const marker = new tt.Marker({
+                    color: '#ff385c',
+                }).setLngLat([apartment.longitude, apartment.latitude]).addTo(map);
+            } else {
+                console.error('TomTom Maps API not available.');
+            }
         },
         sendForm() {
             this.loading = true;
