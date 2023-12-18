@@ -55,10 +55,10 @@ export default {
 <template>
   <!-- Dropdown menu for selecting services -->
   <div class="dropdown m-5 d-flex justify-content-center">
-    <div class="dropdown">
+    <div class="dropdown me-3">
       <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="geoFiltersDropdown"
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Geographical Filters
+        City
       </button>
       <div class="dropdown-menu px-2" aria-labelledby="geoFiltersDropdown">
         <div class="form-group">
