@@ -113,9 +113,13 @@ export default {
                 <div class="row">
                     <!-- Use filteredApartments if available, otherwise use all apartments -->
                     <div class="col-12 col-md-4 col-sm-6 col-lg-3" style="height: 200px; margin-bottom: 20px;"
+                        v-if="apartments.length > 0"
                         v-for="apartment in filteredApartments.length > 0 ? filteredApartments : apartments"
                         :key="apartment.id">
                         <AppCard :apartment="apartment" />
+                    </div>
+                    <div v-else>
+                        <h2>Spiacente! Non abbiamo trovato nessun immobile con i filtri selezionati</h2>
                     </div>
                 </div>
             </div>

@@ -43,6 +43,9 @@ export default {
         radius: this.radiusSlider,
       });
     },
+    reloadPage() {
+      window.location.reload();
+    }
   },
   mounted() {
     // Fetch available services when the component is mounted
@@ -197,6 +200,7 @@ export default {
       </ul>
     </div>
     <button class="btn btn-outline-danger ms-3" @click="applyFilters">Apply Filters</button>
+    <button class="btn btn-outline-danger ms-3" @click="reloadPage">Reset Filters</button>
 
 
 

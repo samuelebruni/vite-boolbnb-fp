@@ -37,10 +37,10 @@ export default {
 
 
 <style lang="scss" scoped>
-
 .bg_overlay {
     background-color: rgba(255, 255, 255, 0.636);
 }
+
 .badge-overlay {
     position: absolute;
     top: 50%;
@@ -60,7 +60,8 @@ export default {
 }
 
 .apartment-name-overlay {
-    margin-top: 0; /* Remove space above the name */
+    margin-top: 0;
+    /* Remove space above the name */
     margin-bottom: 5px;
     /* Add margin between name and address */
 }
@@ -73,8 +74,10 @@ export default {
 
 .card {
     &:hover {
-        box-shadow: 0 4px 8px #FF385C, 0 0 16px #FF385C; /* Add box shadow on hover */
-        transform: scale(1.05); /* Add magnification effect on hover */
+        box-shadow: 0 4px 8px #FF385C, 0 0 16px #FF385C;
+        /* Add box shadow on hover */
+        transform: scale(1.05);
+        /* Add magnification effect on hover */
     }
 }
 </style>
