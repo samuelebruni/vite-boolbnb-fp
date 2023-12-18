@@ -6,18 +6,19 @@ export default {
   data() {
     return {
       selected_filters: {
-        selected_services: [], // Array to store selected services
-        selected_rooms: [], // Array to store selected rooms
-        selected_bedrooms: [], // Array to store selected bedrooms
-        selected_beds: [], // Array to store selected beds
-        selected_max_guests: [], // Array to store selected maxGuests
-        selected_bathrooms: [] // Array to store selected bathrooms
+        selected_services: [],
+        selected_rooms: [],
+        selected_bedrooms: [],
+        selected_beds: [],
+        selected_max_guests: [],
+        selected_bathrooms: []
       },
-      services: [], // Array to store available services
+      services: [],
       latitude: null,
       longitude: null,
       radius: null,
       radiusSlider: 10,
+      isCitySelected: false,
     };
   },
   methods: {
@@ -29,7 +30,51 @@ export default {
         console.error('Error fetching services:', error);
       }
     },
+    initializeTomTomSearchBox() {
+      var options = {
+        searchOptions: {
+          key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX",
+          language: "en-GB",
+          limit: 5,
+        },
+        autocompleteOptions: {
+          key: "C1hD0sgXZDUkeMEZv5sG1rcdkSZbr1dX",
+          language: "en-GB",
+        },
+      };
+
+      var ttSearchBox = new tt.plugins.SearchBox(tt.services, options);
+
+      ttSearchBox.on("tomtom.searchbox.resultselected", (event) => {
+        if (event.data && event.data.result && event.data.result.position) {
+          var position = event.data.result.position;
+          this.latitude = position.lat;
+          this.longitude = position.lng;
+          this.isCitySelected = true;
+
+          console.log("Latitude:", this.latitude);
+          console.log("Longitude:", this.longitude);
+        }
+      });
+
+      ttSearchBox.on("tomtom.searchbox.resultscleared", () => {
+        this.latitude = null;
+        this.longitude = null;
+        this.isCitySelected = false;
+      });
+
+      var searchBoxContainer = document.getElementById("tomtom-searchbox-container");
+      searchBoxContainer.appendChild(ttSearchBox.getSearchBoxHTML());
+    },
     applyFilters() {
+      if (!this.isCitySelected) {
+        this.latitude = null;
+        this.longitude = null;
+        this.isCitySelected = false;
+
+
+      }
+
       console.log({
         ...this.selected_filters,
         latitude: this.latitude,
@@ -45,7 +90,7 @@ export default {
     },
   },
   mounted() {
-    // Fetch available services when the component is mounted
+    this.initializeTomTomSearchBox();
     this.fetchServices();
   },
 };
@@ -60,14 +105,15 @@ export default {
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         City
       </button>
-      <div class="dropdown-menu px-2" aria-labelledby="geoFiltersDropdown">
+      <div style="width: 400px;" class="dropdown-menu px-2" aria-labelledby="geoFiltersDropdown">
+        <div id="tomtom-searchbox-container"></div>
         <div class="form-group">
-          <label for="latitudeInput">Latitude:</label>
-          <input type="number" class="form-control" id="latitudeInput" v-model="latitude" placeholder="Enter latitude">
+
+          <input type="hidden" class="form-control" id="latitudeInput" v-model="latitude" placeholder="Enter latitude">
         </div>
         <div class="form-group">
-          <label for="longitudeInput">Longitude:</label>
-          <input type="number" class="form-control" id="longitudeInput" v-model="longitude" placeholder="Enter longitude">
+
+          <input type="hidden" class="form-control" id="longitudeInput" v-model="longitude" placeholder="Enter longitude">
         </div>
         <div class="form-group">
           <div class="form-group">
