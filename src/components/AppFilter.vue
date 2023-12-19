@@ -22,6 +22,10 @@ export default {
     };
   },
   methods: {
+
+    selected_filtersCount(selectedFilters) {
+      return selectedFilters.length;
+    },
     async fetchServices() {
       try {
         const response = await axios.get('http://127.0.0.1:8000/api/service');
@@ -107,6 +111,8 @@ export default {
       <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="geoFiltersDropdown"
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         City
+        <span v-if="isCitySelected" class="badge bg-secondary">
+          1 </span>
       </button>
       <div style="width: 400px;" class="dropdown-menu px-2" aria-labelledby="geoFiltersDropdown">
         <div id="tomtom-searchbox-container"></div>
@@ -130,7 +136,10 @@ export default {
     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Services
+      <span v-if="selected_filtersCount(selected_filters.selected_services) > 0" class="badge bg-secondary">{{
+        selected_filtersCount(selected_filters.selected_services) }}</span>
     </button>
+
     <div class="dropdown-menu px-2" aria-labelledby="servicesDropdown">
       <div v-for="service in services" :key="service.id" class="form-check">
         <input class="form-check-input" type="checkbox" :id="'serviceCheckbox_' + service.id"
@@ -143,6 +152,8 @@ export default {
     <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Rooms
+      <span v-if="selected_filtersCount(selected_filters.selected_rooms) > 0" class="badge bg-secondary">{{
+        selected_filtersCount(selected_filters.selected_rooms) }}</span>
     </button>
     <div class="dropdown-menu px-2" aria-labelledby="servicesDropdown">
       <ul>
@@ -164,6 +175,8 @@ export default {
     <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Bedrooms
+      <span v-if="selected_filtersCount(selected_filters.selected_bedrooms) > 0" class="badge bg-secondary">{{
+        selected_filtersCount(selected_filters.selected_bedrooms) }}</span>
     </button>
     <div class="dropdown-menu px-2" aria-labelledby="servicesDropdown">
       <ul>
@@ -185,6 +198,8 @@ export default {
     <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Beds
+      <span v-if="selected_filtersCount(selected_filters.selected_beds) > 0" class="badge bg-secondary">{{
+        selected_filtersCount(selected_filters.selected_beds) }}</span>
     </button>
     <div class="dropdown-menu px-2" aria-labelledby="servicesDropdown">
       <ul>
@@ -206,6 +221,8 @@ export default {
     <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Max Guests
+      <span v-if="selected_filtersCount(selected_filters.selected_max_guests) > 0" class="badge bg-secondary">{{
+        selected_filtersCount(selected_filters.selected_max_guests) }}</span>
     </button>
     <div class="dropdown-menu px-2" aria-labelledby="servicesDropdown">
       <ul>
@@ -227,6 +244,8 @@ export default {
     <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Bathrooms
+      <span v-if="selected_filtersCount(selected_filters.selected_bathrooms) > 0" class="badge bg-secondary">{{
+        selected_filtersCount(selected_filters.selected_bathrooms) }}</span>
     </button>
     <div class="dropdown-menu px-2" aria-labelledby="servicesDropdown">
       <ul>
