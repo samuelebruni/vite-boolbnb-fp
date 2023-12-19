@@ -123,10 +123,55 @@ export default {
                             <h6 class="justify-content-start mt-3 btn btn-pink"><i
                                     class="fa-solid fa-location-dot text-white"></i> {{ apartment.address }} </h6>
                         </a>
-                        <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#imagesOthersModal">
                             <h6 class="justify-content-end mt-3 btn btn-pink">👉 Show others images </h6>
                         </a>
                     </div>
+
+
+                    <!-- Modal images -->
+                    <div class="modal fade" id="imagesOthersModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+
+                                    <!-- Carousel images -->
+                                    <div class="container w-100 my-5">
+
+                                        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+
+                                                <div v-for="image in apartment.images" class="carousel-item">
+                                                    <img class="cover_image d-block w-100"
+                                                        :src="this.baseUrl + 'storage/' + image.path" alt="Immagine">
+
+                                                </div>
+
+                                            </div>
+                                            <button class="carousel-control-prev" type="button"
+                                                data-bs-target="#carouselExample" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon bg-black" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </button>
+                                            <button class="carousel-control-next" type="button"
+                                                data-bs-target="#carouselExample" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon bg-black" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
 
                 </div>
                 <!-- Immagini aggiuntive a destra, disposte in 2 colonne -->
@@ -353,10 +398,12 @@ export default {
 #map {
     width: 800px;
 }
-.image_cover{
+
+.image_cover {
     width: 650px;
     height: 450px;
 }
+
 img {
     border-radius: 15px;
 }
