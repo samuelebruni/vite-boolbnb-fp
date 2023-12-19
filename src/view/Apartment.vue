@@ -114,11 +114,23 @@ export default {
 
             <!-- Immagine principale a sinistra -->
             <div class="row">
-                <div class="col-6">
-                    <img class="w-100" :src="this.baseUrl + 'storage/' + apartment.cover_image" alt="">
+                <div class="col-sm-12 col-lg-10 col-xl-6">
+                    <img class="image_cover" :src="this.baseUrl + 'storage/' + apartment.cover_image" alt="">
+
+                    <!-- Btn maps & others images -->
+                    <div class="d-flex justify-content-between btn_action">
+                        <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <h6 class="justify-content-start mt-3 btn btn-pink"><i
+                                    class="fa-solid fa-location-dot text-white"></i> {{ apartment.address }} </h6>
+                        </a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <h6 class="justify-content-end mt-3 btn btn-pink">👉 Show others images </h6>
+                        </a>
+                    </div>
+
                 </div>
                 <!-- Immagini aggiuntive a destra, disposte in 2 colonne -->
-                <div class="col-6 my_auto pt-4">
+                <div class="col-sm-12 col-lg-8 col-xl-6 d-sm-none d-md-none d-lg-block pt-4">
                     <div class="row ">
                         <div class="col-6  mb-3" v-for="(image, index) in apartment.images.slice(0, 2)" :key="index">
                             <div class="card border-0 d-flex flex-column">
@@ -136,9 +148,7 @@ export default {
                     </div>
                 </div>
             </div>
-            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h6 class="mt-3"><i class="fa-solid fa-location-dot pink"></i> {{ apartment.address }} </h6>
-            </a>
+
         </div>
 
 
@@ -343,7 +353,10 @@ export default {
 #map {
     width: 800px;
 }
-
+.image_cover{
+    width: 650px;
+    height: 450px;
+}
 img {
     border-radius: 15px;
 }
@@ -356,6 +369,10 @@ img {
     margin: 1rem 0;
 }
 
+.btn-pink {
+    color: #ffffff;
+    background: #ff385c;
+}
 
 /* Colors */
 .pink {
