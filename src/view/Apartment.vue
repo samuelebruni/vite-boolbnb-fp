@@ -118,17 +118,17 @@ export default {
                     <img class="w-100" :src="this.baseUrl + 'storage/' + apartment.cover_image" alt="">
                 </div>
                 <!-- Immagini aggiuntive a destra, disposte in 2 colonne -->
-                <div class="col-6 my_auto">
-                    <div class="row">
-                        <div class="col-6 mb-3" v-for="(image, index) in apartment.images.slice(0, 2)" :key="index">
-                            <div class="card d-flex flex-column">
+                <div class="col-6 my_auto pt-4">
+                    <div class="row ">
+                        <div class="col-6  mb-3" v-for="(image, index) in apartment.images.slice(0, 2)" :key="index">
+                            <div class="card border-0 d-flex flex-column">
                                 <img :src="this.baseUrl + 'storage/' + image.path" class="img-dx"
                                     alt="Immagine {{ index + 1 }}">
                             </div>
                         </div>
 
-                        <div class="col-6 mb-3" v-for="(image, index) in apartment.images.slice(2, 4)" :key="index">
-                            <div class="card d-flex flex-column">
+                        <div class="col-6  mb-3" v-for="(image, index) in apartment.images.slice(2, 4)" :key="index">
+                            <div class="card border-0 d-flex flex-column">
                                 <img :src="this.baseUrl + 'storage/' + image.path" class="img-dx"
                                     alt="Immagine {{ index + 1 }}">
                             </div>
@@ -137,7 +137,7 @@ export default {
                 </div>
             </div>
             <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <h6><i class="fa-solid fa-location-dot pink"></i> {{ apartment.address }} </h6>
+                <h6 class="mt-3"><i class="fa-solid fa-location-dot pink"></i> {{ apartment.address }} </h6>
             </a>
         </div>
 
