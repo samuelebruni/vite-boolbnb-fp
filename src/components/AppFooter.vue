@@ -10,6 +10,17 @@ export default {
         changeTab(val) {
             this.showTab = val;
         }
+    },
+    mounted() {
+        const root = document.documentElement;
+        const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue("--marquee-elements-displayed");
+        const marqueeContent = document.querySelector("ul.marquee-content");
+
+        root.style.setProperty("--marquee-elements", marqueeContent.children.length);
+
+        for (let i = 0; i < marqueeElementsDisplayed; i++) {
+            marqueeContent.appendChild(marqueeContent.children[i].cloneNode(true));
+        }
     }
 }
 </script>
@@ -17,6 +28,17 @@ export default {
 <template>
     <footer class="block_footer">
         <div class="border-bottom py-4">
+            <div class="marquee">
+                <ul class="marquee-content">
+                    <li><i class="fa-brands fa-paypal"></i></li>
+                    <li><i class="fa-brands fa-amazon"></i></li>
+                    <li><i class="fa-brands fa-google"></i></li>
+                    <li><i class="fa-brands fa-wix"></i></li>
+                    <li><i class="fa-brands fa-uber"></i></li>
+                    <li><i class="fa-brands fa-stripe"></i></li>
+                    <li><i class="fa-brands fa-airbnb"></i></li>
+                </ul>
+            </div>
             <div class="container">
                 <div class="d-flex mt-5 pt-2 border-bottom">
                     <ul class="nav nav-underline">
