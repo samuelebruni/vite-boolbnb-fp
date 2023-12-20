@@ -63,7 +63,8 @@ export default {
         </div>
 
 
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas offcanvas_open offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
                     Menu
@@ -73,15 +74,16 @@ export default {
             <div class="offcanvas-body">
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <a class="nav-link active text-dark" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active text-dark" aria-current="page"
+                            href="http://127.0.0.1:8000/register">Register</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-dark dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Login/Register</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownId">
-                            <a class="dropdown-item text-dark" href="http://127.0.0.1:8000/login">Login</a>
-                            <a class="dropdown-item" href="http://127.0.0.1:8000/register">Register</a>
-                        </div>
+                    <li class="nav-item ">
+                        <a class="nav-link active text-dark " href="http://127.0.0.1:8000/login" aria-current="page">Login
+                        </a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link active text-dark " href="http://127.0.0.1:8000/admin" aria-current="page">Dashboard
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -125,5 +127,10 @@ export default {
         width: 300px;
         height: 300px;
     }
+}
+
+.offcanvas_open {
+    max-width: 200px;
+    /* Adjust this value as needed */
 }
 </style>
