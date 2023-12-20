@@ -28,17 +28,6 @@ export default {
 <template>
     <footer class="block_footer">
         <div class="border-bottom py-4">
-            <div class="marquee" style="width:100%">
-                <ul class="marquee-content">
-                    <li><i class="fa-brands fa-paypal"></i></li>
-                    <li><i class="fa-brands fa-amazon"></i></li>
-                    <li><i class="fa-brands fa-google"></i></li>
-                    <li><i class="fa-brands fa-wix"></i></li>
-                    <li><i class="fa-brands fa-uber"></i></li>
-                    <li><i class="fa-brands fa-stripe"></i></li>
-                    <li><i class="fa-brands fa-airbnb"></i></li>
-                </ul>
-            </div>
             <div class="container">
                 <div class="d-flex mt-5 pt-2 border-bottom">
                     <ul class="nav nav-underline">
@@ -232,9 +221,18 @@ export default {
                         </ul>
                     </div>
                 </div>
-
-
             </div>
+        </div>
+        <div class="marquee" style="width:100%">
+            <ul class="marquee-content">
+                <li><i class="fa-brands fa-paypal"></i></li>
+                <li><i class="fa-brands fa-amazon"></i></li>
+                <li><i class="fa-brands fa-google"></i></li>
+                <li><i class="fa-brands fa-wix"></i></li>
+                <li><i class="fa-brands fa-uber"></i></li>
+                <li><i class="fa-brands fa-stripe"></i></li>
+                <li><i class="fa-brands fa-airbnb"></i></li>
+            </ul>
         </div>
 
     </footer>
