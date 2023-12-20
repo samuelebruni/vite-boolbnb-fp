@@ -125,9 +125,9 @@ export default {
                             <h6 class="justify-content-start mt-3 btn btn-pink"><i
                                     class="fa-solid fa-location-dot text-white"></i> {{ apartment.address }} </h6>
                         </a>
-                        <a href="" data-bs-toggle="modal" data-bs-target="#imagesOthersModal">
+                        <!--  <a href="" data-bs-toggle="modal" data-bs-target="#imagesOthersModal">
                             <h6 class="justify-content-end mt-3 btn btn-pink">👉 Show others images </h6>
-                        </a>
+                        </a> -->
                     </div>
 
 
