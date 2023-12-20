@@ -4,6 +4,7 @@
 import axios from 'axios';
 import AppCard from '../components/AppCard.vue';
 import AppFilter from '../components/AppFilter.vue';
+import AppCardSponsored from '../components/AppCardSponsored.vue';
 import { emitter } from '../eventBus';
 
 
@@ -12,11 +13,14 @@ export default {
     components: {
         AppCard,
         AppFilter,
+        AppCardSponsored,
     },
     data() {
         return {
             apartments: [],
             filteredApartments: [],
+            filteredSponsoredApartments: [],
+            filteredNonSponsoredApartments: [],
             baseUrl: 'http://127.0.0.1:8000/',
             loading: false,
         };
@@ -29,9 +33,25 @@ export default {
                 this.apartments = data.data.result;
                 this.loading = false;
 
-                if (filters && filters.latitude && filters.longitude) {
-                    const { latitude, longitude, radius } = filters;
+                // Filter apartments based on sponsorship
+                this.filteredSponsoredApartments = this.apartments.filter(
+                    (apartment) => apartment.sponsorships.length > 0
+                );
+                this.filteredNonSponsoredApartments = this.apartments.filter(
+                    (apartment) => apartment.sponsorships.length === 0
+                );
 
+                // If there is a search term, update filteredApartments
+                if (this.searchTerm) {
+                    this.updateFilteredApartmentsBySearch(this.searchTerm);
+                } else {
+                    // Otherwise, use all apartments
+                    this.filteredApartments = this.apartments;
+                }
+
+                // Check if latitude and longitude are present in filters
+                if (filters && (filters.latitude || filters.longitude)) {
+                    const { latitude, longitude, radius } = filters;
 
                     this.filteredApartments = this.apartments.filter((apartment) => {
                         const distance = this.calculateHaversineDistance(
@@ -43,9 +63,16 @@ export default {
 
                         return distance <= radius;
                     });
-                } else {
-                    this.filteredApartments = this.apartments;
+
+                    // Separate sponsored and non-sponsored apartments
+                    this.filteredSponsoredApartments = this.filteredApartments.filter(
+                        (apartment) => apartment.sponsorships.length > 0
+                    );
+                    this.filteredNonSponsoredApartments = this.filteredApartments.filter(
+                        (apartment) => apartment.sponsorships.length === 0
+                    );
                 }
+
             } catch (error) {
                 this.loading = false;
                 console.error('Error fetching apartments:', error);
@@ -82,21 +109,32 @@ export default {
                     (apartment.name && apartment.name.toLowerCase().includes(searchTerm.toLowerCase()))
                 );
             });
+            // Separate sponsored and non-sponsored apartments
+            this.filteredSponsoredApartments = this.filteredApartments.filter(
+                (apartment) => apartment.sponsorships.length > 0
+            );
+            this.filteredNonSponsoredApartments = this.filteredApartments.filter(
+                (apartment) => apartment.sponsorships.length === 0
+            );
+
+            // Update the main filteredApartments array
+            this.filteredApartments = filteredApartments;
         },
         filterSearch(filters) {
-            console.log(filters, 'ciao');
-            this.getApartments(filters);
-        },
-    },
-    watch: {
-        'AppHeader.searchTerm': function (newSearchTerm) {
-            this.updateFilteredApartmentsBySearch(newSearchTerm);
+            // Handle filtering based on the search term
+            if (filters.searchTerm) {
+                this.updateFilteredApartmentsBySearch(filters.searchTerm);
+            } else {
+                // Handle other filters
+                this.getApartments(filters);
+            }
         },
     },
     mounted() {
         console.log('Homepage mounted');
 
         emitter.on('searchTermChanged', (newSearchTerm) => {
+            this.searchTerm = newSearchTerm;
             this.updateFilteredApartmentsBySearch(newSearchTerm);
         });
         this.getApartments();
@@ -104,6 +142,16 @@ export default {
     updated() {
         console.log('Homepage updated');
     },
+    computed: {
+        sponsoredApartments() {
+            // Filter sponsored apartments
+            return this.filteredSponsoredApartments;
+        },
+        regularApartments() {
+            // Filter non-sponsored apartments
+            return this.filteredNonSponsoredApartments;
+        },
+    }
 };
 </script>
 
@@ -117,9 +165,12 @@ export default {
                 <div class="row">
                     <!-- Use filteredApartments if available, otherwise use all apartments -->
                     <div class="col-12 col-md-4 col-sm-6 col-lg-3" style="height: 200px; margin-bottom: 20px;"
-                        v-if="apartments.length > 0 && !loading"
-                        v-for="apartment in filteredApartments.length > 0 ? filteredApartments : apartments"
-                        :key="apartment.id">
+                        v-if="sponsoredApartments.length > 0" v-for="apartment in sponsoredApartments" :key="apartment.id">
+                        <AppCardSponsored :apartment="apartment" />
+                    </div>
+                    <!-- Display non-sponsored apartments next -->
+                    <div class="col-12 col-md-4 col-sm-6 col-lg-3" style="height: 200px; margin-bottom: 20px;"
+                        v-if="regularApartments.length > 0" v-for="apartment in regularApartments" :key="apartment.id">
                         <AppCard :apartment="apartment" />
                     </div>
                     <div v-else-if="loading" class="container_loader">
