@@ -106,14 +106,14 @@ export default {
 
 <template>
   <!-- Dropdown menu for selecting services -->
-  <div class="dropdown m-5 d-flex justify-content-center">
+  <div class="dropdown mb-5 mt-3 d-flex justify-content-center flex-wrap">
     <div class="dropdown me-3">
-      <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="geoFiltersDropdown"
+      <button class="btn btn-outline-secondary mt-3 dropdown-toggle ms-3" type="button" id="geoFiltersDropdown"
         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         City
         <span v-if="isCitySelected" class="badge bg-secondary">
           <svg style="fill: white; width: 80%;" xmlns="http://www.w3.org/2000/svg" height="16" width="14"
-            viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+            viewBox="0 0 448 512">
             <path
               d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
           </svg></span>
@@ -137,7 +137,7 @@ export default {
         </div>
       </div>
     </div>
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="servicesDropdown"
+    <button class="btn btn-outline-secondary mt-3 dropdown-toggle" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Services
       <span v-if="selected_filtersCount(selected_filters.selected_services) > 0" class="badge bg-secondary">{{
@@ -153,7 +153,7 @@ export default {
         </label>
       </div>
     </div>
-    <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
+    <button class="btn btn-outline-secondary mt-3 dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Rooms
       <span v-if="selected_filtersCount(selected_filters.selected_rooms) > 0" class="badge bg-secondary">{{
@@ -176,7 +176,7 @@ export default {
           > 5 </li>
       </ul>
     </div>
-    <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
+    <button class="btn btn-outline-secondary mt-3 dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Bedrooms
       <span v-if="selected_filtersCount(selected_filters.selected_bedrooms) > 0" class="badge bg-secondary">{{
@@ -199,7 +199,7 @@ export default {
           > 5 </li>
       </ul>
     </div>
-    <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
+    <button class="btn btn-outline-secondary mt-3 dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Beds
       <span v-if="selected_filtersCount(selected_filters.selected_beds) > 0" class="badge bg-secondary">{{
@@ -222,7 +222,7 @@ export default {
           > 5 </li>
       </ul>
     </div>
-    <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
+    <button class="btn btn-outline-secondary mt-3 dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Max Guests
       <span v-if="selected_filtersCount(selected_filters.selected_max_guests) > 0" class="badge bg-secondary">{{
@@ -245,7 +245,7 @@ export default {
           > 5 </li>
       </ul>
     </div>
-    <button class="btn btn-outline-secondary dropdown-toggle ms-3" type="button" id="servicesDropdown"
+    <button class="btn btn-outline-secondary mt-3 dropdown-toggle ms-3" type="button" id="servicesDropdown"
       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Bathrooms
       <span v-if="selected_filtersCount(selected_filters.selected_bathrooms) > 0" class="badge bg-secondary">{{
@@ -268,8 +268,8 @@ export default {
           > 5 </li>
       </ul>
     </div>
-    <button class="btn btn-outline-danger ms-3" @click="applyFilters">Apply Filters</button>
-    <button class="btn btn-outline-danger ms-3" @click="reloadPage">Reset Filters</button>
+    <button class="btn btn-outline-danger ms-3 mt-3" @click="applyFilters">Apply Filters</button>
+    <button class="btn btn-outline-danger ms-3 mt-3" @click="reloadPage">Reset Filters</button>
 
 
 

@@ -18,13 +18,16 @@ export default {
             apartments: [],
             filteredApartments: [],
             baseUrl: 'http://127.0.0.1:8000/',
+            loading: false,
         };
     },
     methods: {
         async getApartments(filters = null) {
             try {
+                this.loading = true;
                 const data = await axios.post(`${this.baseUrl}api/apartments`, filters);
                 this.apartments = data.data.result;
+                this.loading = false;
 
                 if (filters && filters.latitude && filters.longitude) {
                     const { latitude, longitude, radius } = filters;
@@ -44,6 +47,7 @@ export default {
                     this.filteredApartments = this.apartments;
                 }
             } catch (error) {
+                this.loading = false;
                 console.error('Error fetching apartments:', error);
             }
         },
@@ -113,10 +117,28 @@ export default {
                 <div class="row">
                     <!-- Use filteredApartments if available, otherwise use all apartments -->
                     <div class="col-12 col-md-4 col-sm-6 col-lg-3" style="height: 200px; margin-bottom: 20px;"
-                        v-if="apartments.length > 0"
+                        v-if="apartments.length > 0 && !loading"
                         v-for="apartment in filteredApartments.length > 0 ? filteredApartments : apartments"
                         :key="apartment.id">
                         <AppCard :apartment="apartment" />
+                    </div>
+                    <div v-else-if="loading" class="container_loader">
+                        <div id="wifi-loader">
+                            <svg class="circle-outer" viewBox="0 0 86 86">
+                                <circle class="back" cx="43" cy="43" r="40"></circle>
+                                <circle class="front" cx="43" cy="43" r="40"></circle>
+                                <circle class="new" cx="43" cy="43" r="40"></circle>
+                            </svg>
+                            <svg class="circle-middle" viewBox="0 0 60 60">
+                                <circle class="back" cx="30" cy="30" r="27"></circle>
+                                <circle class="front" cx="30" cy="30" r="27"></circle>
+                            </svg>
+                            <svg class="circle-inner" viewBox="0 0 34 34">
+                                <circle class="back" cx="17" cy="17" r="14"></circle>
+                                <circle class="front" cx="17" cy="17" r="14"></circle>
+                            </svg>
+                            <div class="text" data-text="Loading"></div>
+                        </div>
                     </div>
                     <div v-else>
                         <h2>Spiacente! Non abbiamo trovato nessun immobile con i filtri selezionati</h2>

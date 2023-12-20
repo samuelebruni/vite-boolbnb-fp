@@ -28,7 +28,7 @@ export default {
 <template>
     <footer class="block_footer">
         <div class="border-bottom py-4">
-            <div class="marquee">
+            <div class="marquee" style="width:100%">
                 <ul class="marquee-content">
                     <li><i class="fa-brands fa-paypal"></i></li>
                     <li><i class="fa-brands fa-amazon"></i></li>
