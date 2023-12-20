@@ -131,7 +131,7 @@ export default {
         <div class="form-group">
           <div class="form-group">
             <label for="radiusSlider">Radius:</label>
-            <input type="range" class="form-range" id="radiusSlider" v-model="radiusSlider" min="1" max="20">
+            <input type="range" class="form-range" id="radiusSlider" v-model="radiusSlider" min="1" max="100">
             <span>{{ radiusSlider }} km</span>
           </div>
         </div>
